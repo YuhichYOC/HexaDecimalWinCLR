@@ -907,14 +907,20 @@ StrHexaDecimal::~StrHexaDecimal()
     disposed = true;
 }
 
-void ColumnDefinition::SetIndex(int arg)
+void ColumnDefinition::SetRange(int start, int end)
 {
-    index = arg;
+    startAt = start;
+    endAt = end;
 }
 
-int ColumnDefinition::GetIndex()
+int ColumnDefinition::GetRangeStart()
 {
-    return index;
+    return startAt;
+}
+
+int ColumnDefinition::GetRangeEnd()
+{
+    return endAt;
 }
 
 void ColumnDefinition::SetOrder(Order arg)
@@ -937,12 +943,12 @@ IHexaDecimal::ValueType ColumnDefinition::GetType()
     return type;
 }
 
-ColumnDefinition * ColumnDefinition::Value(int arg1index, Order arg2order, IHexaDecimal::ValueType arg3type)
+ColumnDefinition * ColumnDefinition::Value(int arg1start, int arg2end, Order arg3order, IHexaDecimal::ValueType arg4type)
 {
     ColumnDefinition * ret = new ColumnDefinition();
-    ret->SetIndex(arg1index);
-    ret->SetOrder(arg2order);
-    ret->SetType(arg3type);
+    ret->SetRange(arg1start, arg2end);
+    ret->SetOrder(arg3order);
+    ret->SetType(arg4type);
     return ret;
 }
 
@@ -952,6 +958,130 @@ ColumnDefinition::ColumnDefinition()
 
 ColumnDefinition::~ColumnDefinition()
 {
+}
+
+IHexaDecimal * Compare::CastLeft(int arg, char * left)
+{
+    IHexaDecimal * ret = nullptr;
+    switch (columns[arg]->GetType()) {
+    case IHexaDecimal::ValueType::BCD:
+        ret = new BCDHexaDecimal();
+    case IHexaDecimal::ValueType::BCD_DATE:
+        ret = new DateBCDHexaDecimal();
+    case IHexaDecimal::ValueType::BCD_DATE_LONG:
+        ret = new LongDateBCDHexaDecimal();
+    case IHexaDecimal::ValueType::HEX:
+        ret = new RawStrHexaDecimal();
+    case IHexaDecimal::ValueType::NUM_INT:
+        ret = new IntHexaDecimal();
+    case IHexaDecimal::ValueType::NUM_LONG:
+        ret = new LongHexaDecimal();
+    case IHexaDecimal::ValueType::RAW_STR:
+        ret = new RawStrHexaDecimal();
+    default:
+        ret = new StrHexaDecimal();
+    }
+    int range = columns[arg]->GetRangeEnd() - columns[arg]->GetRangeStart();
+    ret->SetSize(range);
+    char * value = new char[range];
+    for (int i = 0; i < range; i++) {
+        value[i] = left[columns[arg]->GetRangeStart() + i];
+    }
+    ret->SetHexa(value);
+    return ret;
+}
+
+IHexaDecimal * Compare::CastRight(int arg, char * right)
+{
+    IHexaDecimal * ret = nullptr;
+    switch (columns[arg]->GetType()) {
+    case IHexaDecimal::ValueType::BCD:
+        ret = new BCDHexaDecimal();
+    case IHexaDecimal::ValueType::BCD_DATE:
+        ret = new DateBCDHexaDecimal();
+    case IHexaDecimal::ValueType::BCD_DATE_LONG:
+        ret = new LongDateBCDHexaDecimal();
+    case IHexaDecimal::ValueType::HEX:
+        ret = new RawStrHexaDecimal();
+    case IHexaDecimal::ValueType::NUM_INT:
+        ret = new IntHexaDecimal();
+    case IHexaDecimal::ValueType::NUM_LONG:
+        ret = new LongHexaDecimal();
+    case IHexaDecimal::ValueType::RAW_STR:
+        ret = new RawStrHexaDecimal();
+    default:
+        ret = new StrHexaDecimal();
+    }
+    int range = columns[arg]->GetRangeEnd() - columns[arg]->GetRangeStart();
+    ret->SetSize(range);
+    char * value = new char[range];
+    for (int i = 0; i < range; i++) {
+        value[i] = right[columns[arg]->GetRangeStart() + i];
+    }
+    ret->SetHexa(value);
+    return ret;
+}
+
+void Compare::SetColumns(vector<ColumnDefinition *> arg)
+{
+    columns = arg;
+}
+
+bool Compare::operator()(char * leftSide, char * rightSide)
+{
+    for (size_t i = 0; i < columns.size(); i++) {
+        IHexaDecimal * leftItem = CastLeft(i, leftSide);
+        IHexaDecimal * rightItem = CastRight(i, rightSide);
+        if (columns[i]->GetOrder() == ColumnDefinition::Order::ASC) {
+            switch (columns[i]->GetType()) {
+            case IHexaDecimal::ValueType::BCD:
+            case IHexaDecimal::ValueType::BCD_DATE:
+            case IHexaDecimal::ValueType::BCD_DATE_LONG:
+            case IHexaDecimal::ValueType::NUM_INT:
+            case IHexaDecimal::ValueType::NUM_LONG:
+                if (leftItem->GetNumericValue() < rightItem->GetNumericValue()) {
+                    return true;
+                }
+                else if (leftItem->GetNumericValue() > rightItem->GetNumericValue()) {
+                    return false;
+                }
+                break;
+            default:
+                if (leftItem->GetRawValue() < rightItem->GetRawValue()) {
+                    return true;
+                }
+                else if (leftItem->GetRawValue() > rightItem->GetRawValue()) {
+                    return false;
+                }
+                break;
+            }
+        }
+        else {
+            switch (columns[i]->GetType()) {
+            case IHexaDecimal::ValueType::BCD:
+            case IHexaDecimal::ValueType::BCD_DATE:
+            case IHexaDecimal::ValueType::BCD_DATE_LONG:
+            case IHexaDecimal::ValueType::NUM_INT:
+            case IHexaDecimal::ValueType::NUM_LONG:
+                if (leftItem->GetNumericValue() > rightItem->GetNumericValue()) {
+                    return true;
+                }
+                else if (leftItem->GetNumericValue() < rightItem->GetNumericValue()) {
+                    return false;
+                }
+                break;
+            default:
+                if (leftItem->GetRawValue() > rightItem->GetRawValue()) {
+                    return true;
+                }
+                else if (leftItem->GetRawValue() < rightItem->GetRawValue()) {
+                    return false;
+                }
+                break;
+            }
+        }
+    }
+    return false;
 }
 
 void HexaTable::AddColumn(ColumnDefinition * arg)

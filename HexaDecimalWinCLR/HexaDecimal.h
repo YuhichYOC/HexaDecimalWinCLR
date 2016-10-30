@@ -359,12 +359,14 @@ public:
 
     enum Order
     {
-        ASC, DESC, NONE,
+        ASC, DESC
     };
 
 private:
 
-    int index;
+    int startAt;
+
+    int endAt;
 
     Order order;
 
@@ -372,9 +374,11 @@ private:
 
 public:
 
-    void SetIndex(int arg);
+    void SetRange(int start, int end);
 
-    int GetIndex();
+    int GetRangeStart();
+
+    int GetRangeEnd();
 
     void SetOrder(Order arg);
 
@@ -384,11 +388,28 @@ public:
 
     IHexaDecimal::ValueType GetType();
 
-    ColumnDefinition * Value(int arg1index, Order arg2order, IHexaDecimal::ValueType arg3type);
+    ColumnDefinition * Value(int arg1start, int arg2end, Order arg3order, IHexaDecimal::ValueType arg4type);
 
     ColumnDefinition();
 
     ~ColumnDefinition();
+};
+
+class Compare
+{
+private:
+
+    vector<ColumnDefinition *> columns;
+
+    IHexaDecimal * CastLeft(int arg, char * left);
+
+    IHexaDecimal * CastRight(int arg, char * right);
+
+public:
+
+    void SetColumns(vector<ColumnDefinition *> arg);
+
+    bool operator()(char * leftSide, char * rightSide);
 };
 
 class HexaTable
