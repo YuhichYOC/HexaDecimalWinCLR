@@ -57,6 +57,7 @@ void BCDHexaDecimal::SetHexa(char * arg)
         throw "Size of this instance is not set yet.";
     }
     hexaValue = new char[mySize];
+    disposed = false;
     for (int i = 0; i < mySize; i++) {
         hexaValue[i] = arg[i];
     }
@@ -110,6 +111,7 @@ void BCDHexaDecimal::ValueToHexa()
     }
     BCDHexaDecimal::DisposeHexaValue();
     hexaValue = new char[mySize];
+    disposed = false;
 
     string value = to_string(myValue);
     if (value.length() % 2 != 0) {
@@ -127,19 +129,18 @@ void BCDHexaDecimal::ValueToHexa()
 BCDHexaDecimal::BCDHexaDecimal()
 {
     mySize = -1;
-    disposed = false;
+    disposed = true;
 }
 
 void BCDHexaDecimal::DisposeHexaValue()
 {
+    if (!disposed)
     delete hexaValue;
 }
 
 BCDHexaDecimal::~BCDHexaDecimal()
 {
-    if (!disposed) {
-        BCDHexaDecimal::DisposeHexaValue();
-    }
+    BCDHexaDecimal::DisposeHexaValue();
     disposed = true;
 }
 
@@ -201,6 +202,7 @@ void DateBCDHexaDecimal::SetHexa(char * arg)
         throw "Size of this instance is not set yet.";
     }
     hexaValue = new char[mySize];
+    disposed = false;
     for (int i = 0; i < mySize; i++) {
         hexaValue[i] = arg[i];
     }
@@ -263,6 +265,7 @@ void DateBCDHexaDecimal::ValueToHexa()
     }
     DateBCDHexaDecimal::DisposeHexaValue();
     hexaValue = new char[mySize];
+    disposed = false;
 
     string value = DateBCDHexaDecimal::YYYYtoString();
     value.append(DateBCDHexaDecimal::MMtoString());
@@ -282,19 +285,18 @@ void DateBCDHexaDecimal::ValueToHexa()
 DateBCDHexaDecimal::DateBCDHexaDecimal()
 {
     mySize = -1;
-    disposed = false;
+    disposed = true;
 }
 
 void DateBCDHexaDecimal::DisposeHexaValue()
 {
+    if (!disposed)
     delete hexaValue;
 }
 
 DateBCDHexaDecimal::~DateBCDHexaDecimal()
 {
-    if (!disposed) {
-        DateBCDHexaDecimal::DisposeHexaValue();
-    }
+    DateBCDHexaDecimal::DisposeHexaValue();
     disposed = true;
 }
 
@@ -314,6 +316,7 @@ void IntHexaDecimal::SetHexa(char * arg)
         throw "Size of this instance is not set yet.";
     }
     hexaValue = new char[mySize];
+    disposed = false;
     for (int i = 0; i < mySize; i++) {
         hexaValue[i] = arg[i];
     }
@@ -366,6 +369,7 @@ void IntHexaDecimal::ValueToHexa()
     }
     IntHexaDecimal::DisposeHexaValue();
     hexaValue = new char[mySize];
+    disposed = false;
 
     int i = 0;
     unique_ptr<char> reverse(new char[mySize]);
@@ -391,19 +395,18 @@ void IntHexaDecimal::ValueToHexa()
 IntHexaDecimal::IntHexaDecimal()
 {
     mySize = -1;
-    disposed = false;
+    disposed = true;
 }
 
 void IntHexaDecimal::DisposeHexaValue()
 {
+    if (!disposed)
     delete hexaValue;
 }
 
 IntHexaDecimal::~IntHexaDecimal()
 {
-    if (!disposed) {
-        IntHexaDecimal::DisposeHexaValue();
-    }
+    IntHexaDecimal::DisposeHexaValue();
     disposed = true;
 }
 
@@ -564,6 +567,7 @@ void LongDateBCDHexaDecimal::ValueToHexa()
     }
     LongDateBCDHexaDecimal::DisposeHexaValue();
     hexaValue = new char[mySize];
+    disposed = false;
 
     string value = LongDateBCDHexaDecimal::YYYYtoString();
     value.append(LongDateBCDHexaDecimal::MMtoString());
@@ -586,19 +590,18 @@ void LongDateBCDHexaDecimal::ValueToHexa()
 LongDateBCDHexaDecimal::LongDateBCDHexaDecimal()
 {
     mySize = -1;
-    disposed = false;
+    disposed = true;
 }
 
 void LongDateBCDHexaDecimal::DisposeHexaValue()
 {
+    if (!disposed)
     delete hexaValue;
 }
 
 LongDateBCDHexaDecimal::~LongDateBCDHexaDecimal()
 {
-    if (!disposed) {
-        LongDateBCDHexaDecimal::DisposeHexaValue();
-    }
+    LongDateBCDHexaDecimal::DisposeHexaValue();
     disposed = true;
 }
 
@@ -618,6 +621,7 @@ void LongHexaDecimal::SetHexa(char * arg)
         throw "Size of this instance is not set yet.";
     }
     hexaValue = new char[mySize];
+    disposed = false;
     for (int i = 0; i < mySize; i++) {
         hexaValue[i] = arg[i];
     }
@@ -670,6 +674,7 @@ void LongHexaDecimal::ValueToHexa()
     }
     LongHexaDecimal::DisposeHexaValue();
     hexaValue = new char[mySize];
+    disposed = false;
 
     int i = 0;
     unique_ptr<char> reverse(new char[mySize]);
@@ -695,19 +700,18 @@ void LongHexaDecimal::ValueToHexa()
 LongHexaDecimal::LongHexaDecimal()
 {
     mySize = -1;
-    disposed = false;
+    disposed = true;
 }
 
 void LongHexaDecimal::DisposeHexaValue()
 {
+    if (!disposed)
     delete hexaValue;
 }
 
 LongHexaDecimal::~LongHexaDecimal()
 {
-    if (!disposed) {
-        LongHexaDecimal::DisposeHexaValue();
-    }
+    LongHexaDecimal::DisposeHexaValue();
     disposed = true;
 }
 
@@ -727,6 +731,7 @@ void RawStrHexaDecimal::SetHexa(char * arg)
         throw "Size of this instance is not set yet.";
     }
     hexaValue = new char[mySize];
+    disposed = false;
     for (int i = 0; i < mySize; i++) {
         hexaValue[i] = arg[i];
     }
@@ -781,6 +786,7 @@ void RawStrHexaDecimal::ValueToHexa()
     }
     RawStrHexaDecimal::DisposeHexaValue();
     hexaValue = new char[mySize];
+    disposed = false;
 
     string value = myValue;
     if (value.substr(0, 2) == "0x") {
@@ -797,19 +803,18 @@ void RawStrHexaDecimal::ValueToHexa()
 RawStrHexaDecimal::RawStrHexaDecimal()
 {
     mySize = -1;
-    disposed = false;
+    disposed = true;
 }
 
 void RawStrHexaDecimal::DisposeHexaValue()
 {
+    if (!disposed)
     delete hexaValue;
 }
 
 RawStrHexaDecimal::~RawStrHexaDecimal()
 {
-    if (!disposed) {
-        RawStrHexaDecimal::DisposeHexaValue();
-    }
+    RawStrHexaDecimal::DisposeHexaValue();
     disposed = true;
 }
 
@@ -829,6 +834,7 @@ void StrHexaDecimal::SetHexa(char * arg)
         throw "Size of this instance is not set yet.";
     }
     hexaValue = new char[mySize];
+    disposed = false;
     for (int i = 0; i < mySize; i++) {
         hexaValue[i] = arg[i];
     }
@@ -882,6 +888,7 @@ void StrHexaDecimal::ValueToHexa()
     }
     StrHexaDecimal::DisposeHexaValue();
     hexaValue = new char[mySize];
+    disposed = false;
 
     for (int i = 0; i < mySize; i++) {
         hexaValue[i] = myValue[i];
@@ -891,19 +898,18 @@ void StrHexaDecimal::ValueToHexa()
 StrHexaDecimal::StrHexaDecimal()
 {
     mySize = -1;
-    disposed = false;
+    disposed = true;
 }
 
 void StrHexaDecimal::DisposeHexaValue()
 {
+    if (!disposed)
     delete hexaValue;
 }
 
 StrHexaDecimal::~StrHexaDecimal()
 {
-    if (!disposed) {
-        StrHexaDecimal::DisposeHexaValue();
-    }
+    StrHexaDecimal::DisposeHexaValue();
     disposed = true;
 }
 
