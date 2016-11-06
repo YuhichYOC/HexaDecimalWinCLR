@@ -16,3 +16,5 @@
 #include <vector>
 
 using namespace std;
+
+#define HEXADECIMAL_EXPORTS

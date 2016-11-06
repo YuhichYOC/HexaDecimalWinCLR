@@ -17,21 +17,21 @@ public:
         HEX, NUM_INT, NUM_LONG, NUM_DECIMAL, BCD, BCD_LONG, BCD_DATE, BCD_DATE_LONG, RAW_STR, STR
     };
 
-    virtual ValueType GetType() = 0;
+    HEXADECIMAL_API virtual ValueType __stdcall GetType() = 0;
 
-    virtual void SetSize(int arg) = 0;
+    HEXADECIMAL_API virtual void __stdcall SetSize(int arg) = 0;
 
-    virtual void SetHexa(char * arg) = 0;
+    HEXADECIMAL_API virtual void __stdcall SetHexa(char * arg) = 0;
 
-    virtual char * GetHexa() = 0;
+    HEXADECIMAL_API virtual char * __stdcall GetHexa() = 0;
 
-    virtual long GetNumericValue() = 0;
+    HEXADECIMAL_API virtual long __stdcall GetNumericValue() = 0;
 
-    virtual string GetRawValue() = 0;
+    HEXADECIMAL_API virtual string __stdcall GetRawValue() = 0;
 
-    virtual void HexaToValue() = 0;
+    HEXADECIMAL_API virtual void __stdcall HexaToValue() = 0;
 
-    virtual void ValueToHexa() = 0;
+    HEXADECIMAL_API virtual void __stdcall ValueToHexa() = 0;
 };
 
 class BCDHexaDecimal : public IHexaDecimal
@@ -48,31 +48,31 @@ private:
 
 public:
 
-    ValueType GetType();
+    HEXADECIMAL_API ValueType __stdcall GetType();
 
-    void SetSize(int arg);
+    HEXADECIMAL_API void __stdcall SetSize(int arg);
 
-    void SetHexa(char * arg);
+    HEXADECIMAL_API void __stdcall SetHexa(char * arg);
 
-    char * GetHexa();
+    HEXADECIMAL_API char * __stdcall GetHexa();
 
-    void SetValue(int arg);
+    HEXADECIMAL_API void __stdcall SetValue(int arg);
 
-    int GetValue();
+    HEXADECIMAL_API int __stdcall GetValue();
 
-    long GetNumericValue();
+    HEXADECIMAL_API long __stdcall GetNumericValue();
 
-    string GetRawValue();
+    HEXADECIMAL_API string __stdcall GetRawValue();
 
-    void HexaToValue();
+    HEXADECIMAL_API void __stdcall HexaToValue();
 
-    void ValueToHexa();
+    HEXADECIMAL_API void __stdcall ValueToHexa();
 
-    BCDHexaDecimal();
+    HEXADECIMAL_API __stdcall BCDHexaDecimal();
 
-    void DisposeHexaValue();
+    HEXADECIMAL_API void __stdcall DisposeHexaValue();
 
-    ~BCDHexaDecimal();
+    HEXADECIMAL_API __stdcall ~BCDHexaDecimal();
 };
 
 class DateBCDHexaDecimal : public IHexaDecimal
@@ -99,31 +99,31 @@ private:
 
 public:
 
-    ValueType GetType();
+    HEXADECIMAL_API ValueType __stdcall GetType();
 
-    void SetSize(int arg);
+    HEXADECIMAL_API void __stdcall SetSize(int arg);
 
-    void SetHexa(char * arg);
+    HEXADECIMAL_API void __stdcall SetHexa(char * arg);
 
-    char * GetHexa();
+    HEXADECIMAL_API char * __stdcall GetHexa();
 
-    void SetValue(int arg1yyyy, int arg2mm, int arg3dd);
+    HEXADECIMAL_API void __stdcall SetValue(int arg1yyyy, int arg2mm, int arg3dd);
 
-    string GetBCDStr();
+    HEXADECIMAL_API string __stdcall GetBCDStr();
 
-    long GetNumericValue();
+    HEXADECIMAL_API long __stdcall GetNumericValue();
 
-    string GetRawValue();
+    HEXADECIMAL_API string __stdcall GetRawValue();
 
-    void HexaToValue();
+    HEXADECIMAL_API void __stdcall HexaToValue();
 
-    void ValueToHexa();
+    HEXADECIMAL_API void __stdcall ValueToHexa();
 
-    DateBCDHexaDecimal();
+    HEXADECIMAL_API __stdcall DateBCDHexaDecimal();
 
-    void DisposeHexaValue();
+    HEXADECIMAL_API void __stdcall DisposeHexaValue();
 
-    ~DateBCDHexaDecimal();
+    HEXADECIMAL_API __stdcall ~DateBCDHexaDecimal();
 };
 
 class IntHexaDecimal : public IHexaDecimal
@@ -140,31 +140,31 @@ private:
 
 public:
 
-    ValueType GetType();
+    HEXADECIMAL_API ValueType __stdcall GetType();
 
-    void SetSize(int arg);
+    HEXADECIMAL_API void __stdcall SetSize(int arg);
 
-    void SetHexa(char * arg);
+    HEXADECIMAL_API void __stdcall SetHexa(char * arg);
 
-    char * GetHexa();
+    HEXADECIMAL_API char * __stdcall GetHexa();
 
-    void SetValue(int arg);
+    HEXADECIMAL_API void __stdcall SetValue(int arg);
 
-    int GetValue();
+    HEXADECIMAL_API int __stdcall GetValue();
 
-    long GetNumericValue();
+    HEXADECIMAL_API long __stdcall GetNumericValue();
 
-    string GetRawValue();
+    HEXADECIMAL_API string __stdcall GetRawValue();
 
-    void HexaToValue();
+    HEXADECIMAL_API void __stdcall HexaToValue();
 
-    void ValueToHexa();
+    HEXADECIMAL_API void __stdcall ValueToHexa();
 
-    IntHexaDecimal();
+    HEXADECIMAL_API __stdcall IntHexaDecimal();
 
-    void DisposeHexaValue();
+    HEXADECIMAL_API void __stdcall DisposeHexaValue();
 
-    ~IntHexaDecimal();
+    HEXADECIMAL_API __stdcall ~IntHexaDecimal();
 };
 
 class LongDateBCDHexaDecimal : public IHexaDecimal
@@ -203,31 +203,31 @@ private:
 
 public:
 
-    ValueType GetType();
+    HEXADECIMAL_API ValueType __stdcall GetType();
 
-    void SetSize(int arg);
+    HEXADECIMAL_API void __stdcall SetSize(int arg);
 
-    void SetHexa(char * arg);
+    HEXADECIMAL_API void __stdcall SetHexa(char * arg);
 
-    char * GetHexa();
+    HEXADECIMAL_API char * __stdcall GetHexa();
 
-    void SetValue(int arg1yyyy, int arg2mm, int arg3dd, int arg4hh24, int arg5mi, int arg6ss);
+    HEXADECIMAL_API void __stdcall SetValue(int arg1yyyy, int arg2mm, int arg3dd, int arg4hh24, int arg5mi, int arg6ss);
 
-    string GetBCDStr();
+    HEXADECIMAL_API string __stdcall GetBCDStr();
 
-    long GetNumericValue();
+    HEXADECIMAL_API long __stdcall GetNumericValue();
 
-    string GetRawValue();
+    HEXADECIMAL_API string __stdcall GetRawValue();
 
-    void HexaToValue();
+    HEXADECIMAL_API void __stdcall HexaToValue();
 
-    void ValueToHexa();
+    HEXADECIMAL_API void __stdcall ValueToHexa();
 
-    LongDateBCDHexaDecimal();
+    HEXADECIMAL_API __stdcall LongDateBCDHexaDecimal();
 
-    void DisposeHexaValue();
+    HEXADECIMAL_API void __stdcall DisposeHexaValue();
 
-    ~LongDateBCDHexaDecimal();
+    HEXADECIMAL_API __stdcall ~LongDateBCDHexaDecimal();
 };
 
 class LongHexaDecimal : public IHexaDecimal
@@ -244,31 +244,31 @@ private:
 
 public:
 
-    ValueType GetType();
+    HEXADECIMAL_API ValueType __stdcall GetType();
 
-    void SetSize(int arg);
+    HEXADECIMAL_API void __stdcall SetSize(int arg);
 
-    void SetHexa(char * arg);
+    HEXADECIMAL_API void __stdcall SetHexa(char * arg);
 
-    char * GetHexa();
+    HEXADECIMAL_API char * __stdcall GetHexa();
 
-    void SetValue(long arg);
+    HEXADECIMAL_API void __stdcall SetValue(long arg);
 
-    long GetValue();
+    HEXADECIMAL_API long __stdcall GetValue();
 
-    long GetNumericValue();
+    HEXADECIMAL_API long __stdcall GetNumericValue();
 
-    string GetRawValue();
+    HEXADECIMAL_API string __stdcall GetRawValue();
 
-    void HexaToValue();
+    HEXADECIMAL_API void __stdcall HexaToValue();
 
-    void ValueToHexa();
+    HEXADECIMAL_API void __stdcall ValueToHexa();
 
-    LongHexaDecimal();
+    HEXADECIMAL_API __stdcall LongHexaDecimal();
 
-    void DisposeHexaValue();
+    HEXADECIMAL_API void __stdcall DisposeHexaValue();
 
-    ~LongHexaDecimal();
+    HEXADECIMAL_API __stdcall ~LongHexaDecimal();
 };
 
 class RawStrHexaDecimal : public IHexaDecimal
@@ -285,31 +285,31 @@ private:
 
 public:
 
-    ValueType GetType();
+    HEXADECIMAL_API ValueType __stdcall GetType();
 
-    void SetSize(int arg);
+    HEXADECIMAL_API void __stdcall SetSize(int arg);
 
-    void SetHexa(char * arg);
+    HEXADECIMAL_API void __stdcall SetHexa(char * arg);
 
-    char * GetHexa();
+    HEXADECIMAL_API char * __stdcall GetHexa();
 
-    void SetValue(string arg);
+    HEXADECIMAL_API void __stdcall SetValue(string arg);
 
-    string GetValue();
+    HEXADECIMAL_API string __stdcall GetValue();
 
-    long GetNumericValue();
+    HEXADECIMAL_API long __stdcall GetNumericValue();
 
-    string GetRawValue();
+    HEXADECIMAL_API string __stdcall GetRawValue();
 
-    void HexaToValue();
+    HEXADECIMAL_API void __stdcall HexaToValue();
 
-    void ValueToHexa();
+    HEXADECIMAL_API void __stdcall ValueToHexa();
 
-    RawStrHexaDecimal();
+    HEXADECIMAL_API __stdcall RawStrHexaDecimal();
 
-    void DisposeHexaValue();
+    HEXADECIMAL_API void __stdcall DisposeHexaValue();
 
-    ~RawStrHexaDecimal();
+    HEXADECIMAL_API __stdcall ~RawStrHexaDecimal();
 };
 
 class StrHexaDecimal : public IHexaDecimal
@@ -326,31 +326,31 @@ private:
 
 public:
 
-    ValueType GetType();
+    HEXADECIMAL_API ValueType __stdcall GetType();
 
-    void SetSize(int arg);
+    HEXADECIMAL_API void __stdcall SetSize(int arg);
 
-    void SetHexa(char * arg);
+    HEXADECIMAL_API void __stdcall SetHexa(char * arg);
 
-    char * GetHexa();
+    HEXADECIMAL_API char * __stdcall GetHexa();
 
-    void SetValue(string arg);
+    HEXADECIMAL_API void __stdcall SetValue(string arg);
 
-    string GetValue();
+    HEXADECIMAL_API string __stdcall GetValue();
 
-    long GetNumericValue();
+    HEXADECIMAL_API long __stdcall GetNumericValue();
 
-    string GetRawValue();
+    HEXADECIMAL_API string __stdcall GetRawValue();
 
-    void HexaToValue();
+    HEXADECIMAL_API void __stdcall HexaToValue();
 
-    void ValueToHexa();
+    HEXADECIMAL_API void __stdcall ValueToHexa();
 
-    StrHexaDecimal();
+    HEXADECIMAL_API __stdcall StrHexaDecimal();
 
-    void DisposeHexaValue();
+    HEXADECIMAL_API void __stdcall DisposeHexaValue();
 
-    ~StrHexaDecimal();
+    HEXADECIMAL_API __stdcall ~StrHexaDecimal();
 };
 
 class ColumnDefinition
@@ -374,25 +374,25 @@ private:
 
 public:
 
-    void SetRange(int start, int end);
+    HEXADECIMAL_API void __stdcall SetRange(int start, int end);
 
-    int GetRangeStart();
+    HEXADECIMAL_API int __stdcall GetRangeStart();
 
-    int GetRangeEnd();
+    HEXADECIMAL_API int __stdcall GetRangeEnd();
 
-    void SetOrder(Order arg);
+    HEXADECIMAL_API void __stdcall SetOrder(Order arg);
 
-    ColumnDefinition::Order GetOrder();
+    HEXADECIMAL_API ColumnDefinition::Order __stdcall GetOrder();
 
-    void SetType(IHexaDecimal::ValueType arg);
+    HEXADECIMAL_API void __stdcall SetType(IHexaDecimal::ValueType arg);
 
-    IHexaDecimal::ValueType GetType();
+    HEXADECIMAL_API IHexaDecimal::ValueType __stdcall GetType();
 
-    ColumnDefinition * Value(int arg1start, int arg2end, Order arg3order, IHexaDecimal::ValueType arg4type);
+    HEXADECIMAL_API ColumnDefinition * __stdcall Value(int arg1start, int arg2end, Order arg3order, IHexaDecimal::ValueType arg4type);
 
-    ColumnDefinition();
+    HEXADECIMAL_API __stdcall ColumnDefinition();
 
-    ~ColumnDefinition();
+    HEXADECIMAL_API __stdcall ~ColumnDefinition();
 };
 
 class Compare
@@ -407,9 +407,9 @@ private:
 
 public:
 
-    void SetColumns(vector<ColumnDefinition *> arg);
+    HEXADECIMAL_API void __stdcall SetColumns(vector<ColumnDefinition *> arg);
 
-    bool operator()(char * leftSide, char * rightSide);
+    HEXADECIMAL_API bool __stdcall operator()(char * leftSide, char * rightSide);
 };
 
 class HexaTable
@@ -424,17 +424,17 @@ private:
 
 public:
 
-    void AddColumn(ColumnDefinition * arg);
+    HEXADECIMAL_API void __stdcall AddColumn(ColumnDefinition * arg);
 
-    void SetRawTableData(char * arg);
+    HEXADECIMAL_API void __stdcall SetRawTableData(char * arg);
 
-    HexaTable();
+    HEXADECIMAL_API __stdcall HexaTable();
 
-    void SetTable(int r, int c, IHexaDecimal * item);
+    HEXADECIMAL_API void __stdcall SetTable(int r, int c, IHexaDecimal * item);
 
-    vector<IHexaDecimal *> GetRow(int r);
+    HEXADECIMAL_API vector<IHexaDecimal *> __stdcall GetRow(int r);
 
-    HexaTable(int r, int c);
+    HEXADECIMAL_API __stdcall HexaTable(int r, int c);
 
-    ~HexaTable();
+    HEXADECIMAL_API __stdcall ~HexaTable();
 };
