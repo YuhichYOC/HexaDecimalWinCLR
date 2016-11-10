@@ -1036,8 +1036,8 @@ void Compare::SetColumns(vector<ColumnDefinition *> arg)
 bool Compare::operator()(char * leftSide, char * rightSide)
 {
     for (size_t i = 0; i < columns.size(); i++) {
-        IHexaDecimal * leftItem = CastLeft(i, leftSide);
-        IHexaDecimal * rightItem = CastRight(i, rightSide);
+        IHexaDecimal * leftItem = CastLeft((int)i, leftSide);
+        IHexaDecimal * rightItem = CastRight((int)i, rightSide);
         if (columns[i]->GetOrder() == ColumnDefinition::Order::ASC) {
             switch (columns[i]->GetType()) {
             case IHexaDecimal::ValueType::BCD:
@@ -1090,33 +1090,101 @@ bool Compare::operator()(char * leftSide, char * rightSide)
     return false;
 }
 
+void HexaTable::Row::Allocate(vector<ColumnDefinition *> arg)
+{
+    self = vector<IHexaDecimal *>();
+    IHexaDecimal * item = nullptr;
+    for (size_t i = 0; i < arg.size(); i++) {
+        if (arg[i]->GetType() == IHexaDecimal::ValueType::HEX) {
+            item = new RawStrHexaDecimal();
+        }
+        else if (arg[i]->GetType() == IHexaDecimal::ValueType::STR) {
+            item = new StrHexaDecimal();
+        }
+        else if (arg[i]->GetType() == IHexaDecimal::ValueType::NUM_INT) {
+            item = new IntHexaDecimal();
+        }
+        else if (arg[i]->GetType() == IHexaDecimal::ValueType::BCD_DATE_LONG) {
+            item = new LongDateBCDHexaDecimal();
+        }
+        else if (arg[i]->GetType() == IHexaDecimal::ValueType::NUM_LONG) {
+            item = new LongHexaDecimal();
+        }
+        item->SetSize(arg[i]->GetRangeEnd() - arg[i]->GetRangeStart());
+        self.push_back(item);
+    }
+}
+
+vector<IHexaDecimal *> HexaTable::Row::Get()
+{
+    return self;
+}
+
+HexaTable::Row::Row()
+{
+}
+
+HexaTable::Row::~Row()
+{
+}
+
 void HexaTable::AddColumn(ColumnDefinition * arg)
 {
     columns.push_back(arg);
 }
 
-void HexaTable::SetRawTableData(char * arg)
+void HexaTable::SetRowCount(int arg)
 {
-    rawTableData = arg;
+    rowcount = arg;
 }
 
-void HexaTable::SetTable(int r, int c, IHexaDecimal * item)
+void HexaTable::Allocate()
 {
-    table[r][c] = item;
+    HexaTable::Row * row = new HexaTable::Row();
+    row->Allocate(columns);
+    rows = vector<Row *>();
+    rows.resize(rowcount, row);
 }
 
-vector<IHexaDecimal *> HexaTable::GetRow(int r)
+void HexaTable::SetTableData(char * arg)
 {
-    return table[r];
+    tabledata = arg;
+}
+
+int GetRowSize(vector<ColumnDefinition *> columns)
+{
+    int ret = 0;
+    for (size_t i = 0; i < columns.size(); i++) {
+        ret += columns[i]->GetRangeEnd() - columns[i]->GetRangeStart();
+    }
+    return ret;
+}
+
+char * CutRowData(int r, int c, vector<ColumnDefinition *> columns, int rowSize, char * tabledata)
+{
+    int retSize = columns[c]->GetRangeEnd() - columns[c]->GetRangeStart();
+    char * ret = new char[retSize];
+    int start = rowSize * r + columns[c]->GetRangeStart();
+    for (int i = 0; i < retSize; i++) {
+        ret[i] = tabledata[start + i];
+    }
+    ret[retSize] = char('\0');
+    return ret;
+}
+
+void HexaTable::Cast()
+{
+    int rowSize = GetRowSize(columns);
+    for (int i = 0; i < rowcount; i++) {
+        for (size_t j = 0; j < columns.size(); j++) {
+            char * item = CutRowData(i, (int)j, columns, rowSize, tabledata);
+            rows[i]->Get()[j]->SetHexa(item);
+        }
+    }
 }
 
 HexaTable::HexaTable()
 {
-}
-
-HexaTable::HexaTable(int r, int c)
-{
-    table = vector<vector<IHexaDecimal *>>(r, vector<IHexaDecimal *>(c));
 }
 
 HexaTable::~HexaTable()

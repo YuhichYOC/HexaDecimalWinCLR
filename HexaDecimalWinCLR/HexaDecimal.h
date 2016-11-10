@@ -416,25 +416,44 @@ class HexaTable
 {
 private:
 
+    int rowcount;
+
     vector<ColumnDefinition *> columns;
 
-    char * rawTableData;
+    char * tabledata;
 
-    vector<vector<IHexaDecimal *>> table;
+    class Row
+    {
+    private:
+
+        vector<IHexaDecimal *> self;
+
+    public:
+
+        HEXADECIMAL_API void __stdcall Allocate(vector<ColumnDefinition *> arg);
+
+        HEXADECIMAL_API vector<IHexaDecimal *> __stdcall Get();
+
+        HEXADECIMAL_API __stdcall Row();
+
+        HEXADECIMAL_API __stdcall ~Row();
+    };
+
+    vector<Row *> rows;
 
 public:
 
     HEXADECIMAL_API void __stdcall AddColumn(ColumnDefinition * arg);
 
-    HEXADECIMAL_API void __stdcall SetRawTableData(char * arg);
+    HEXADECIMAL_API void __stdcall SetRowCount(int arg);
+
+    HEXADECIMAL_API void __stdcall Allocate();
+
+    HEXADECIMAL_API void __stdcall SetTableData(char * arg);
+
+    HEXADECIMAL_API void __stdcall Cast();
 
     HEXADECIMAL_API __stdcall HexaTable();
-
-    HEXADECIMAL_API void __stdcall SetTable(int r, int c, IHexaDecimal * item);
-
-    HEXADECIMAL_API vector<IHexaDecimal *> __stdcall GetRow(int r);
-
-    HEXADECIMAL_API __stdcall HexaTable(int r, int c);
 
     HEXADECIMAL_API __stdcall ~HexaTable();
 };
